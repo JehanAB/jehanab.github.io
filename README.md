@@ -1,9 +1,9 @@
-# Jehan AlBuainain — Portfolio (React + Vite)
+# Jehan AlBuainain — Portfolio 
 
 The full personal portfolio site, rebuilt from static HTML/CSS/JS into
-React + Vite — same tooling as the Ops Desk, Recipe Finder, and Habit
-Tracker projects in this portfolio, so the site itself now matches the
-stack it showcases.
+React + Vite — same tooling as the Ops Desk and Recipe Finder projects
+in this portfolio, so the site itself now matches the stack it
+showcases.
 
 Every section, every piece of content, every interactive feature from the
 original site is here: dark mode, full English/Arabic (RTL) translation,
@@ -47,11 +47,11 @@ src/
 
 ## Why this structure
 
-- **Data-driven, not hand-typed JSX**: all 10 projects, 19 tech icons, 8
-  certifications, 3 testimonials, and 10 "Professional Work" items live in
-  `src/data/*.js` as arrays, and each component just `.map()`s over them.
-  Adding an 11th project means adding one object to `projects.js` — no
-  JSX to duplicate.
+- **Data-driven, not hand-typed JSX**: all 8 personal projects, the tech
+  stack icons, certifications, testimonials, and the 10 "Professional
+  Work" items live in `src/data/*.js` as arrays, and each component just
+  `.map()`s over them. Adding another project means adding one object to
+  `projects.js` — no JSX to duplicate.
 - **Real i18n, not DOM string-swapping**: the original site used
   `data-ar` / `data-ar-html` attributes and vanilla JS to swap
   `textContent` at runtime. This version uses a proper `LanguageContext`
@@ -61,36 +61,43 @@ src/
 - **Every visual effect is a small, named hook** instead of one long
   `script.js` — `useTilt`, `useCustomCursor`, `useReveal`, etc. Each does
   one thing and can be reused or dropped independently.
+- **Projects display as a unified bento grid** (`ProjectTile.jsx`): 2
+  large tiles, 2 medium, 4 small — one component handles every size via
+  a `size` field on each project object, instead of separate
+  "featured" and "list" components with duplicated logic.
 
 ## What was actually verified here (and what wasn't)
 
-This is a large project converted in an environment with **no live browser
-and no internet access** — same constraint as the other three. Given the
-size of this one, verification went further than usual:
+This project was converted and iterated on in an environment with **no
+live browser and no internet access** for most of the work. Every
+JS/JSX file is checked for syntax errors and CSS brace balance after
+each edit, and hooks/components referenced in docs are confirmed to
+actually exist and be wired up. That said, **this never replaces
+opening it in a real browser** — several real bugs (a missing `useTilt`
+hook, a broken image aspect ratio, a mobile header padding issue) were
+only caught because the live site was tested by hand and screenshots
+were shared back. Keep testing changes in the browser before trusting
+them.
 
-1. **Every one of the 33 JS/JSX files** was parsed with `@babel/core`
-   (JSX-aware, not just esbuild) — zero syntax errors.
-2. **CSS brace balance** was verified after every edit (381 open / 381
-   close as of the latest change).
-3. Every hook referenced in this README was checked against the codebase
-   to confirm it's both **defined and actually imported/used** by a
-   component — including `useTilt`, which was previously documented but
-   missing from the repo; it's now implemented in `src/hooks/useTilt.js`
-   and wired into `FeaturedProject.jsx`.
-4. **CSS class names referenced in JSX were spot-checked** against
-   `styles.css` to confirm they exist.
+## How this site is actually deployed
 
-**None of this replaces actually opening it in a browser.** No component
-has been visually rendered, no click has been tested, and no responsive
-breakpoint has been checked. Please run `npm run dev` and click through
-every section — theme toggle, language toggle, mobile menu, project card
-hover/tilt, the contact form — before treating this as finished.
+Live at **https://jehanab.github.io/** via GitHub Pages, using the
+GitHub Actions workflow at `.github/workflows/deploy.yml`. On every push
+to `main`, it runs `npm install` + `npm run build` and publishes the
+`dist/` folder automatically — no manual build step, no dragging
+folders anywhere. The repo is named `jehanab.github.io` specifically so
+the site lives at the root domain instead of a `/repo-name/` subpath.
 
-## Deploy it live (free)
+To deploy a fork or a copy of this elsewhere (Vercel, Netlify, etc.),
+any static host that runs `npm run build` and serves `dist/` will work
+the same way.
 
-Same as always — Vercel (import the GitHub repo) or Netlify Drop
-(`npm run build` → drag the `dist/` folder to
-[app.netlify.com/drop](https://app.netlify.com/drop)).
+## The "Resume" button
+
+Under the Experience & Education section, the Resume button links to
+`/Jehan-AlBuainain-CV.pdf`, served from the `public/` folder. To update
+the CV, replace that file (keeping the exact filename — GitHub Pages
+URLs are case-sensitive) and push.
 
 ## One thing to double check yourself
 
