@@ -2,7 +2,7 @@ import opsDeskImg from '../assets/ops-desk.webp';
 import recipeFinderImg from '../assets/recipe-finder.webp';
 
 // GIF demos live in each GitHub repo (used as-is, same URLs as the live site).
-const gif = (repo) => `https://github.com/JehanAB/${repo}/raw/main/demo.gif`;
+const gif = (repo) => `https://jehanab.github.io/${repo}/demo.gif`;
 
 export const projects = [
   {
